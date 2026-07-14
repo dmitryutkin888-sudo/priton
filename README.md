@@ -1,55 +1,19 @@
-# Priton Core
+# Priton
 
-Priton Core — это self-hosted VPN/Proxy платформа с веб-админкой, REST API, Telegram Bot и контейнерной архитектурой.
+Self-hosted VPN / proxy platform scaffold for Ubuntu VPS deployment.
 
-## Что уже реализовано
-- Go backend API с базовыми маршрутами
-- Минимальный GUI (статический веб-интерфейс)
-- Docker Compose шаблон для запуска API
-- Установочный скрипт `install.sh`
-- Базовая схема миграции для пользователей
+## What is included
+- Go backend API with admin and Android-style client endpoints
+- Simple embedded web UI
+- Python Telegram bot stub
+- Docker Compose services for API, PostgreSQL, Redis, Caddy, and bot
+- Ubuntu install script for Docker and Compose
 
-## Требования
-- Ubuntu 22.04/24.04 или Debian 12
-- Docker 24+
-- Docker Compose v2
-- Git
-- curl / wget
-
-## Быстрая установка на сервере
-
-```bash
-sudo apt update && sudo apt install -y git curl
-curl -fsSL https://get.docker.com | sh
-sudo apt install -y docker-compose-plugin
-```
-
-```bash
-git clone https://github.com/dmitryutkin888-sudo/priton.git
-cd priton
-chmod +x install.sh
-sudo ./install.sh
-```
-
-## После установки
-- API: http://<server-ip>:8080/health
-- GUI: http://<server-ip>:8080/
-- Admin login: admin@priton.dev
-- Admin password: changeme
-
-## Структура проекта
-```text
-priton-core/
-├── backend/
-├── web/
-├── migrations/
-├── docker-compose.yml
-├── install.sh
-└── README.md
-```
-
-## Дальнейшие шаги
-- подключить PostgreSQL/Redis
-- добавить JWT и реальную авторизацию
-- внедрить React GUI
-- развернуть протоколы VPN и Telegram bot
+## Quick start on Ubuntu
+1. Copy the repo to your VPS.
+2. Run:
+   ```bash
+   chmod +x install.sh
+   ./install.sh
+   ```
+3. Open the admin UI at http://<server-ip>:30385/ or https://<server-ip>:30386/ after Caddy is configured.

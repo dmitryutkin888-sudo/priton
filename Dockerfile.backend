@@ -1,0 +1,15 @@
+FROM golang:1.22-alpine AS builder
+WORKDIR /src
+COPY go.mod ./
+COPY backend ./backend
+RUN go build -o /out/api ./backend/cmd/api && go build -o /out/cli ./backend/cmd/cli
+
+FROM alpine:3.20
+WORKDIR /app
+COPY --from=builder /out/api /app/api
+COPY --from=builder /out/cli /app/cli
+COPY backend/web /app/web
+RUN chmod +x /app/api /app/cli
+ENV WEB_ROOT=/app/web
+EXPOSE 8080
+CMD ["/app/api"]
