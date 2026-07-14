@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Priton Core Admin</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <main class="shell">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Priton Core</p>
+          <h1>Admin Panel</h1>
+          <p class="subtitle">Минимальный веб-интерфейс для управления сервером и просмотра API-статуса.</p>
+        </div>
+        <div class="badge" id="healthBadge">Checking…</div>
+      </header>
+
+      <section class="grid">
+        <article class="card">
+          <h2>Сервис</h2>
+          <pre id="healthOutput">Загрузка…</pre>
+        </article>
+        <article class="card">
+          <h2>Пользователи</h2>
+          <pre id="usersOutput">Загрузка…</pre>
+        </article>
+        <article class="card">
+          <h2>Ноды</h2>
+          <pre id="nodesOutput">Загрузка…</pre>
+        </article>
+        <article class="card">
+          <h2>Протоколы</h2>
+          <pre id="protocolsOutput">Загрузка…</pre>
+        </article>
+        <article class="card">
+          <h2>Логи</h2>
+          <pre id="logsOutput">Загрузка…</pre>
+        </article>
+      </section>
+    </main>
+    <script src="/static/app.js"></script>
+  </body>
+</html>
