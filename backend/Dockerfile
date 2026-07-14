@@ -5,5 +5,5 @@ COPY go.sum ./
 COPY backend ./backend
 COPY web ./web
 RUN go build -o /priton-api ./backend/cmd/api
-EXPOSE 30385
+EXPOSE 80
 CMD ["/priton-api"]

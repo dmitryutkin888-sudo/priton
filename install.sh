@@ -49,6 +49,9 @@ if command -v ufw >/dev/null 2>&1; then
   ufw --force enable >/dev/null 2>&1 || true
 fi
 
+chmod +x scripts/generate-cert.sh >/dev/null 2>&1 || true
+./scripts/generate-cert.sh >/dev/null 2>&1 || true
+
 docker compose down --remove-orphans >/dev/null 2>&1 || true
 docker compose up -d --build --force-recreate
 
@@ -71,8 +74,8 @@ if [[ -z "$PUBLIC_IP" ]]; then
 fi
 
 echo "Priton Core installed"
-echo "API: http://${PUBLIC_IP}:30385/health"
-echo "GUI: http://${PUBLIC_IP}:30385/"
+echo "API: http://${PUBLIC_IP}:80/health"
+echo "GUI: http://${PUBLIC_IP}:80/"
 echo "Admin login: admin@priton.dev"
 echo "Admin password: changeme"
 echo "If your provider blocks the port, run: sudo ufw allow 30385/tcp"

@@ -5,6 +5,13 @@ services:
       dockerfile: backend/Dockerfile
     network_mode: host
     environment:
-      HOST: 0.0.0.0
-      PORT: 30385
+      HOST: 127.0.0.1
+      PORT: 8080
+    restart: unless-stopped
+  nginx:
+    image: nginx:1.27-alpine
+    network_mode: host
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./certs:/etc/nginx/certs:ro
     restart: unless-stopped
