@@ -3,9 +3,8 @@ services:
     build:
       context: .
       dockerfile: backend/Dockerfile
-    ports:
-      - "0.0.0.0:30385:8080"
-      - "0.0.0.0:30386:8080"
+    network_mode: host
     environment:
-      PORT: 8080
+      HOST: 0.0.0.0
+      PORT: 30385
     restart: unless-stopped

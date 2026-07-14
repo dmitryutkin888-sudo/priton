@@ -49,7 +49,8 @@ if command -v ufw >/dev/null 2>&1; then
   ufw --force enable >/dev/null 2>&1 || true
 fi
 
-docker compose up -d --build
+docker compose down --remove-orphans >/dev/null 2>&1 || true
+docker compose up -d --build --force-recreate
 
 PUBLIC_IP=""
 if command -v curl >/dev/null 2>&1; then
