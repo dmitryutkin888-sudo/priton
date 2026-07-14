@@ -20,9 +20,6 @@ services:
       - redis
     ports:
       - "8080:8080"
-      - "30385:80"
-      - "30386:443"
-      - "30388-30437:30388-30437"
 
   postgres:
     image: postgres:16-alpine
@@ -48,8 +45,8 @@ services:
     volumes:
       - ./caddy/Caddyfile:/etc/caddy/Caddyfile:ro
     ports:
-      - "30385:80"
-      - "30386:443"
+      - "${HTTP_PORT:-30385}:80"
+      - "${HTTPS_PORT:-30386}:443"
     depends_on:
       - api
 

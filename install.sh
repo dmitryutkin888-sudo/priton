@@ -29,9 +29,12 @@ JWT_SECRET=change-me
 DB_PASS=priton-pass
 API_KEY=change-me
 TG_BOT_TOKEN=change-me
+HTTP_PORT=30385
+HTTPS_PORT=30386
 EOF
 fi
 
+docker compose down --remove-orphans >/dev/null 2>&1 || true
 docker compose up -d --build
 
 echo "Priton deployed."
