@@ -48,6 +48,10 @@ if command -v ufw >/dev/null 2>&1; then
   ufw allow "${HTTP_PORT:-30385}"/tcp >/dev/null 2>&1 || true
   ufw allow "${HTTPS_PORT:-30386}"/tcp >/dev/null 2>&1 || true
   ufw allow 8080/tcp >/dev/null 2>&1 || true
+elif command -v iptables >/dev/null 2>&1; then
+  iptables -C INPUT -p tcp --dport "${HTTP_PORT:-30385}" -j ACCEPT >/dev/null 2>&1 || iptables -A INPUT -p tcp --dport "${HTTP_PORT:-30385}" -j ACCEPT
+  iptables -C INPUT -p tcp --dport "${HTTPS_PORT:-30386}" -j ACCEPT >/dev/null 2>&1 || iptables -A INPUT -p tcp --dport "${HTTPS_PORT:-30386}" -j ACCEPT
+  iptables -C INPUT -p tcp --dport 8080 -j ACCEPT >/dev/null 2>&1 || iptables -A INPUT -p tcp --dport 8080 -j ACCEPT
 fi
 
 docker compose down --remove-orphans >/dev/null 2>&1 || true

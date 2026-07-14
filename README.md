@@ -11,9 +11,14 @@ Self-hosted VPN / proxy platform scaffold for Ubuntu VPS deployment.
 
 ## Quick start on Ubuntu
 1. Copy the repo to your VPS.
-2. Run:
+2. Stop host nginx if it is listening on ports 80/443:
+   ```bash
+   systemctl stop nginx
+   systemctl disable nginx
+   ```
+3. Run:
    ```bash
    chmod +x install.sh
    ./install.sh
    ```
-3. Open the admin UI at http://<server-ip>:30385/ or https://<server-ip>:30386/ after Caddy is configured.
+4. Open the admin UI at http://<server-ip>:30385/ or https://<server-ip>:30386/ after Caddy is configured.
