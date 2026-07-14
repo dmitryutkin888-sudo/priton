@@ -2,6 +2,7 @@ package main
 
 import (
     "net/http"
+    "os"
     "path/filepath"
     "github.com/gin-gonic/gin"
     "priton/backend/internal/auth"
@@ -55,5 +56,13 @@ func main() {
 
     api.POST("/bot/webhook", bot.WebhookHandler)
 
-    _ = r.Run(":8080")
+    host := os.Getenv("HOST")
+    if host == "" {
+        host = "0.0.0.0"
+    }
+    port := os.Getenv("PORT")
+    if port == "" {
+        port = "8080"
+    }
+    _ = r.Run(host + ":" + port)
 }

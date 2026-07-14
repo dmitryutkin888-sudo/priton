@@ -42,10 +42,19 @@ if ! docker info >/dev/null 2>&1; then
   systemctl start docker || true
 fi
 
+if command -v ufw >/dev/null 2>&1; then
+  ufw allow 22/tcp >/dev/null 2>&1 || true
+  ufw allow 30385/tcp >/dev/null 2>&1 || true
+  ufw allow 30386/tcp >/dev/null 2>&1 || true
+  ufw --force enable >/dev/null 2>&1 || true
+fi
+
 docker compose up -d --build
 
+PUBLIC_IP="$(hostname -I | awk '{print $1}')"
+
 echo "Priton Core installed"
-echo "API: http://127.0.0.1:8080/health"
-echo "GUI: http://127.0.0.1:8080/"
+echo "API: http://${PUBLIC_IP}:30385/health"
+echo "GUI: http://${PUBLIC_IP}:30385/"
 echo "Admin login: admin@priton.dev"
 echo "Admin password: changeme"
