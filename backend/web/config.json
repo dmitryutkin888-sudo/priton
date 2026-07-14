@@ -1,0 +1,24 @@
+{
+  "server": {
+    "name": "Priton Core",
+    "domain": "priton.example.com",
+    "http_port": 30385,
+    "https_port": 30386,
+    "public_ip": "auto"
+  },
+  "protocols": [
+    {"name": "AmneziaWG", "enabled": true, "port": 33000, "type": "udp"},
+    {"name": "VLESS", "enabled": true, "port": 443, "type": "tls"},
+    {"name": "Shadowsocks", "enabled": true, "port": 8388, "type": "tcp"},
+    {"name": "Trojan", "enabled": true, "port": 8443, "type": "tls"},
+    {"name": "Hysteria2", "enabled": true, "port": 8444, "type": "quic"},
+    {"name": "TUIC", "enabled": true, "port": 8445, "type": "quic"},
+    {"name": "MTProto", "enabled": true, "port": 443, "type": "tcp"}
+  ],
+  "features": {
+    "telegram_bot": true,
+    "cluster": true,
+    "monitoring": true,
+    "backup": true
+  }
+}

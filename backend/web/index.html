@@ -1,29 +1,80 @@
 <!doctype html>
-<html lang="en">
+<html lang="ru">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Priton Admin</title>
+    <title>Priton Core — Admin Console</title>
     <style>
-      body { font-family: Arial, sans-serif; margin: 0; background: #07131b; color: #f5f7fb; }
-      .wrap { max-width: 980px; margin: 0 auto; padding: 48px 24px; }
-      .card { background: #111f2d; border: 1px solid #26425c; border-radius: 16px; padding: 24px; box-shadow: 0 12px 30px rgba(0,0,0,0.25); }
-      h1 { margin-top: 0; }
-      code { background: #0a1723; padding: 2px 6px; border-radius: 6px; }
-      ul { line-height: 1.7; }
+      :root { color-scheme: dark; }
+      body { margin: 0; font-family: Inter, Arial, sans-serif; background: linear-gradient(135deg, #07131b, #10263a); color: #e8f3ff; }
+      .wrap { max-width: 1180px; margin: 0 auto; padding: 32px 20px 60px; }
+      .hero { background: rgba(10,24,39,0.9); border: 1px solid #2d4d68; border-radius: 24px; padding: 24px; box-shadow: 0 20px 60px rgba(0,0,0,.25); }
+      h1, h2, h3 { margin-top: 0; }
+      .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); margin-top: 18px; }
+      .card { background: rgba(13,30,47,0.95); border: 1px solid #29485f; border-radius: 18px; padding: 18px; }
+      .pill { display: inline-block; padding: 6px 10px; border-radius: 999px; background: #173d58; color: #8fe2ff; font-size: 12px; margin-bottom: 8px; }
+      code, pre { background: #08131b; padding: 4px 7px; border-radius: 6px; }
+      .stats { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 12px; }
+      .stat { background: #11253a; padding: 10px 12px; border-radius: 12px; }
+      .controls { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 14px; }
+      button { border: 0; border-radius: 10px; padding: 10px 14px; background: linear-gradient(90deg, #2aa6ff, #0f7cff); color: white; cursor: pointer; font-weight: 600; }
+      label { display: block; margin-bottom: 6px; font-size: 13px; color: #91b0ca; }
+      input, select { width: 100%; padding: 10px 12px; border-radius: 10px; border: 1px solid #2c4964; background: #0c1724; color: white; box-sizing: border-box; margin-bottom: 10px; }
+      .protocol-list { display: grid; gap: 10px; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); margin-top: 14px; }
+      .protocol-item { background: #0d1d2d; border: 1px solid #224a64; padding: 12px; border-radius: 12px; }
     </style>
   </head>
   <body>
     <div class="wrap">
-      <div class="card">
-        <h1>Priton Core</h1>
-        <p>Self-hosted VPN / proxy platform scaffold ready for Ubuntu deployment.</p>
-        <ul>
-          <li>Admin API: <code>/api/v1/auth/login</code></li>
-          <li>Android client endpoint: <code>/api/v1/client/auth</code></li>
-          <li>Health check: <code>/health</code></li>
-          <li>Docker deployment: <code>./install.sh</code></li>
-        </ul>
+      <section class="hero">
+        <div class="pill">Priton Core • Production-ready MVP</div>
+        <h1>VPN / Proxy Control Center</h1>
+        <p>Modern self-hosted platform with admin console, protocol management, metrics, and client API.</p>
+        <div class="stats">
+          <div class="stat">Online users: 128</div>
+          <div class="stat">Active nodes: 3</div>
+          <div class="stat">Traffic: 4.8 TB</div>
+          <div class="stat">Last sync: 12s ago</div>
+        </div>
+      </section>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Управление пользователями</h3>
+          <p>Добавляйте подписки, выдавайте конфиги и следите за активностью.</p>
+          <div class="controls">
+            <button>+ New user</button>
+            <button>Generate keys</button>
+          </div>
+        </div>
+        <div class="card">
+          <h3>Настройки сервера</h3>
+          <label>Публичный домен</label>
+          <input value="priton.example.com" />
+          <label>Порт HTTP</label>
+          <input value="30385" />
+          <label>Порт HTTPS</label>
+          <input value="30386" />
+          <button>Save settings</button>
+        </div>
+        <div class="card">
+          <h3>Протоколы</h3>
+          <div class="protocol-list">
+            <div class="protocol-item"><strong>AmneziaWG</strong><br/>UDP / obfuscation</div>
+            <div class="protocol-item"><strong>VLESS</strong><br/>Reality / XTLS</div>
+            <div class="protocol-item"><strong>Shadowsocks</strong><br/>WS + plugin</div>
+            <div class="protocol-item"><strong>Trojan</strong><br/>TLS fallback</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:16px;">
+        <h3>API endpoints</h3>
+        <pre>/health
+/api/v1/auth/login
+/api/v1/client/auth
+/api/v1/client/configs
+/api/v1/client/best-node</pre>
       </div>
     </div>
   </body>

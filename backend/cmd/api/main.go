@@ -34,6 +34,11 @@ func main() {
         w.Header().Set("Content-Type", "application/json")
         _, _ = w.Write([]byte(`{"subscription":{"plan":"premium","expires_at":"2030-01-01T00:00:00Z","features":["auto_switch","split_tunnel"]},"nodes":[{"node_id":"node-1","role":"master","location":"Russia","host":"127.0.0.1","load_percent":25,"protocols":[{"type":"vless","port":443,"config":{"id":"demo"},"connection_string":"vless://demo@127.0.0.1:443"}]}],"telegram_proxy":{"host":"127.0.0.1","port":443,"secret":"demo"}}`))
     })
+    mux.HandleFunc("/api/v1/client/best-node", func(w http.ResponseWriter, r *http.Request) {
+        w.Header().Set("Content-Type", "application/json")
+        _, _ = w.Write([]byte(`{"node_id":"node-1","host":"127.0.0.1","protocol_config":{"type":"vless"},"reason":"least_load"}`))
+    })
+    mux.HandleFunc("/api/v1/settings", handleConfig)
     mux.Handle("/", http.FileServer(http.Dir(webRoot)))
 
     fmt.Printf("listening on :%s\n", port)

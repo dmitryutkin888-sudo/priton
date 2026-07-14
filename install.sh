@@ -9,6 +9,11 @@ if [[ $EUID -ne 0 ]]; then
   exit 1
 fi
 
+if ! command -v curl >/dev/null 2>&1; then
+  apt-get update
+  apt-get install -y curl ca-certificates gnupg lsb-release
+fi
+
 if ! command -v docker >/dev/null 2>&1; then
   apt-get update
   apt-get install -y ca-certificates curl gnupg lsb-release
@@ -34,9 +39,46 @@ HTTPS_PORT=30386
 EOF
 fi
 
+set -a
+# shellcheck disable=SC1091
+source .env
+set +a
+
+if command -v ufw >/dev/null 2>&1; then
+  ufw allow "${HTTP_PORT:-30385}"/tcp >/dev/null 2>&1 || true
+  ufw allow "${HTTPS_PORT:-30386}"/tcp >/dev/null 2>&1 || true
+  ufw allow 8080/tcp >/dev/null 2>&1 || true
+fi
+
 docker compose down --remove-orphans >/dev/null 2>&1 || true
 docker compose up -d --build
 
+PUBLIC_IP="${PUBLIC_IP:-}"
+if [[ -z "$PUBLIC_IP" ]]; then
+  for candidate in \
+    "$(curl -fsSL --max-time 3 https://api.ipify.org 2>/dev/null || true)" \
+    "$(curl -fsSL --max-time 3 https://ifconfig.me 2>/dev/null || true)" \
+    "$(curl -fsSL --max-time 3 https://icanhazip.com 2>/dev/null || true)"; do
+    if [[ -n "$candidate" && "$candidate" != "127.0.0.1" ]]; then
+      PUBLIC_IP="$candidate"
+      break
+    fi
+  done
+fi
+
+if [[ -z "$PUBLIC_IP" ]]; then
+  PUBLIC_IP="$(hostname -I | awk '{for (i=1;i<=NF;i++) if ($i !~ /^(127\.|10\.|172\.(1[6-9]|2[0-9]|3[0-1])\.|192\.168\.)/) {print $i; exit}}')"
+fi
+
+if [[ -z "$PUBLIC_IP" ]]; then
+  PUBLIC_IP="$(hostname -I | awk '{print $1}')"
+fi
+
+HTTP_PORT="${HTTP_PORT:-30385}"
+HTTPS_PORT="${HTTPS_PORT:-30386}"
+
 echo "Priton deployed."
-echo "Admin UI: http://$(hostname -I | awk '{print $1}'):30385"
-echo "API: http://$(hostname -I | awk '{print $1}'):8080"
+echo "Admin UI: http://${PUBLIC_IP}:${HTTP_PORT}"
+echo "API: http://${PUBLIC_IP}:8080"
+echo "HTTPS UI: https://${PUBLIC_IP}:${HTTPS_PORT}"
+echo "If the service is not reachable, ensure the firewall allows TCP ${HTTP_PORT}, ${HTTPS_PORT}, and 8080."
