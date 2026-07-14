@@ -25,8 +25,8 @@ sudo apt install -y docker-compose-plugin
 ```
 
 ```bash
-git clone https://github.com/<your-username>/priton-core.git
-cd priton-core
+git clone https://github.com/dmitryutkin888-sudo/priton.git
+cd priton
 chmod +x install.sh
 sudo ./install.sh
 ```
